@@ -25,8 +25,10 @@ TST_DIR = $(BUILD)/unit_tests
 BUFF_SIZE ?= 0x1000
 STD_TYPES ?= true
 
+CC ?= $(CROSS_COMPILER)gcc
+AR ?= $(CROSS_COMPILER)ar
+RANLIB ?= $(CROSS_COMPILER)ranlib
 
-CC ?= gcc
 LD = $(CC)
 CFLAGS ?= -Wall 							\
 	  -Wmissing-field-initializers					\
@@ -59,8 +61,8 @@ $(OBJ_DIR)/%.o:%.c
 	$(CC) $(CFLAGS) $(IIO_DEFS) -I $(INC_DIR) -o $@ -c $<
 
 $(LIBRARY):$(OBJS)
-	ar rc $(LIBRARY) $(OBJS)
-	ranlib $(LIBRARY)
+	$(AR) rc $(LIBRARY) $(OBJS)
+	$(RANLIB) $(LIBRARY)
 
 .DEFAULT_GOAL := all	
 
